@@ -1,3 +1,73 @@
+# Unit 6 - Recitation
+
+# Video 2
+
+flower = read.csv("flower.csv", header=FALSE)
+str(flower)
+
+# Change the data type to matrix
+flowerMatrix = as.matrix(flower)
+str(flowerMatrix)
+
+# Turn matrix into a vector
+flowerVector = as.vector(flowerMatrix)
+str(flowerVector)
+
+flowerVector2 = as.vector(flower)
+str(flowerVector2)
+
+# Compute distances
+distance = dist(flowerVector, method = "euclidean")
+
+
+
+# Video 3
+
+# Hierarchical clustering
+clusterIntensity = hclust(distance, method="ward")
+
+# Plot the dendrogram
+plot(clusterIntensity)
+
+# Select 3 clusters
+rect.hclust(clusterIntensity, k = 3, border = "red")
+flowerClusters = cutree(clusterIntensity, k = 3)
+flowerClusters
+
+# Find mean intensity values
+tapply(flowerVector, flowerClusters, mean)
+
+# Plot the image and the clusters
+dim(flowerClusters) = c(50,50)
+image(flowerClusters, axes = FALSE)
+
+# Original image
+image(flowerMatrix,axes=FALSE,col=grey(seq(0,1,length=256)))
+
+
+
+# Video 4
+
+# Let's try this with an MRI image of the brain
+
+healthy = read.csv("healthy.csv", header=FALSE)
+healthyMatrix = as.matrix(healthy)
+str(healthyMatrix)
+
+# Plot image
+image(healthyMatrix,axes=FALSE,col=grey(seq(0,1,length=256)))
+
+# Hierarchial clustering
+healthyVector = as.vector(healthyMatrix)
+distance = dist(healthyVector, method = "euclidean")
+
+# We have an error - why?
+str(healthyVector)
+
+
+
+# Video 5
+
 # Specify number of clusters
 k = 5
 
@@ -14,6 +84,10 @@ KMC$centers[2]
 dim(healthyClusters) = c(nrow(healthyMatrix), ncol(healthyMatrix))
 
 image(healthyClusters, axes = FALSE, col=rainbow(k))
+
+
+
+# Video 6
 
 # Apply to a test image
  
